@@ -1,11 +1,12 @@
 import { useState } from "react"
 import {useDispatch} from "react-redux"
-import { loginUser } from "../../store/UserSlice";
+import { loginUser, profileUser } from "../../store/UserSlice";
 import { useNavigate } from "react-router-dom";
 
 function SignIn(){
   const [email,setEmail] = useState('');
   const [password,setPassword] = useState('');
+  //redux state
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -15,6 +16,9 @@ function SignIn(){
     let userCredentials = {email:email,password: password};
     dispatch(loginUser(userCredentials)).then((result)=>{
       if(result.payload){
+        setEmail('')
+        setPassword('')
+        dispatch(profileUser())
         navigate('/user')
       }
     })
