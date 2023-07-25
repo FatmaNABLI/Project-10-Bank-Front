@@ -1,13 +1,26 @@
 import '../../index.css'
 import argentBankLogo from '../../assets/argentBankLogo.png'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-function getUser(){
-    let user = localStorage.getItem("user");
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
+
+function getUSer(){
+    let user = localStorage.getItem("user")  ;
+    console.log(user);
+    if(!user){
+        user = null
+    }
+    return user
 }
 function Header(){
-    //const connected = useSelector((state)=>state);
-    //console.log(connected)
+    const {user} = useSelector((state)=>state.user)
+    const dispatch = useDispatch();
+  
+    const handleLogout = ()=>{
+        localStorage.removeItem("token")
+        localStorage.removeItem("user");
+        dispatch({type:"user/logoutUser"})
+    }
     return(
         <nav className="main-nav">
             <Link className="main-nav-logo" to="/">
@@ -18,15 +31,22 @@ function Header(){
             />
             <h1 className="sr-only">Argent Bank</h1>
             </Link>
+            {user? <div id="user-connected">
+                <i className="fa fa-user"></i>
+                {/* {user} */}
+                <button id="btn-signout" onClick={handleLogout}>
+                <i className="fa fa-sign-out"></i>
+                Sign Out
+                </button>
+               
+            </div>:
             <div>
                 <Link to="/signin">
                 <i className="fa fa-user-circle"></i>
-                <i className="fa fa-sign-out"></i>
                 Sign In
                 </Link>
-
-   
             </div>
+           }
         </nav>
     )
 
