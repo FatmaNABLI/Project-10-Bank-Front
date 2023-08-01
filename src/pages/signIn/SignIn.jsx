@@ -1,5 +1,5 @@
 import { useState } from "react"
-import {useDispatch} from "react-redux"
+import {useDispatch, useSelector} from "react-redux"
 import { loginUser, profileUser } from "../../store/UserSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ function SignIn(){
   const [password,setPassword] = useState('');
   //redux state
 
+  const {loading,error} = useSelector((state)=>state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -15,6 +16,7 @@ function SignIn(){
     e.preventDefault();
     let userCredentials = {email:email,password: password};
     dispatch(loginUser(userCredentials)).then((result)=>{
+      console.log(error);
       if(result.payload){
         setEmail('')
         setPassword('')
@@ -45,7 +47,7 @@ function SignIn(){
             {/* <a href="./user.html" className="sign-in-button">Sign In</a> */}
             {/* SHOULD BE THE BUTTON BELOW */}
             <button className="sign-in-button">Sign In</button> 
-           
+            {error && <p className="error-message">{error}</p>}
           </form>
         </section>
       </main>

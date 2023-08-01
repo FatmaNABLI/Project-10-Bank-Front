@@ -1,25 +1,18 @@
 import '../../index.css'
 import argentBankLogo from '../../assets/argentBankLogo.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useState } from 'react'
 
-function getUSer(){
-    let user = localStorage.getItem("user")  ;
-    console.log(user);
-    if(!user){
-        user = null
-    }
-    return user
-}
+
 function Header(){
     const {user} = useSelector((state)=>state.user)
     const dispatch = useDispatch();
-  
+    const navigate = useNavigate();
     const handleLogout = ()=>{
         localStorage.removeItem("token")
         localStorage.removeItem("user");
         dispatch({type:"user/logoutUser"})
+        navigate('/signin')
     }
     return(
         <nav className="main-nav">
@@ -33,7 +26,7 @@ function Header(){
             </Link>
             {user? <div id="user-connected">
                 <i className="fa fa-user"></i>
-                {/* {user} */}
+                {user.firstName}
                 <button id="btn-signout" onClick={handleLogout}>
                 <i className="fa fa-sign-out"></i>
                 Sign Out
