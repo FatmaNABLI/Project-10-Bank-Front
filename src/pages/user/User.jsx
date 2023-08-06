@@ -25,9 +25,12 @@ function User(){
     const openForm = ()=>{
       const form = document.getElementById("form-change-profile");
       form.style.display="block";
+      document.getElementById("edit-button").style.display="none"
     }
     const closeForm = ()=>{
       document.getElementById("form-change-profile").style.display = "none"
+      document.getElementById("edit-button").style.display="inline-block"
+
     }
    
     return(
@@ -41,12 +44,12 @@ function User(){
               <input type="text" id="userLastName" placeholder = {user && user.lastName} onChange ={(e)=>setLastName(e.target.value)} />
             </div>
             <div>
-            <button type="submit">Valider</button> 
-            <button type="reset" onClick={closeForm}>Annuler</button>
+            <button className="edit-button" type="submit">Valider</button> 
+            <button className="edit-button cancel-button" type="reset" onClick={closeForm}>Annuler</button>
             </div>
             
           </form>
-          <button className="edit-button" onClick={openForm}>Edit Name</button>
+          <button id="edit-button" className="edit-button" onClick={openForm}>Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
         {accounts.map((account,index)=>

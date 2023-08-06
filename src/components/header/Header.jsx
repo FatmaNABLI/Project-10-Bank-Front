@@ -1,4 +1,5 @@
 import '../../index.css'
+import './Header.css'
 import argentBankLogo from '../../assets/argentBankLogo.png'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
@@ -29,7 +30,7 @@ function Header(){
                 {user.firstName}
                 <button id="btn-signout" onClick={handleLogout}>
                 <i className="fa fa-sign-out"></i>
-                Sign Out
+                <span>Sign Out</span>
                 </button>
                
             </div>:

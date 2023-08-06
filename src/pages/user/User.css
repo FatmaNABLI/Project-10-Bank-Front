@@ -1,3 +1,14 @@
 #form-change-profile{
     display: none;
 }
+.cancel-button{
+    background-color: #ff0000;
+    border-color: #ff0000;
+    margin-left: 20px;
+}
+input {
+    background-color: rgb(232, 240, 254);
+    padding: 5px 10px;
+    margin-right: 20px;
+    margin-bottom: 20px;
+}
