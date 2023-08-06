@@ -35,6 +35,24 @@ export const profileUser = createAsyncThunk(
     }
 )
 
+export const changeProfileUser = createAsyncThunk(
+    'user/changeProfileUser',
+    async (userCredentials)=>{
+        //API call
+        const urlProfil = "http://localhost:3001/api/v1/user/profile";
+        const token =  localStorage.getItem('token') ;
+        const request = await axios.put(urlProfil,userCredentials,
+        { headers: {
+                'Authorization' : `Bearer ${token}`,
+                'Accept' : 'application/json',
+                'Content-Type': 'application/json'
+            } 
+        });
+        const response = await request.data;
+        console.log(response);
+        return response;
+    }
+)
 const userSlice = createSlice({
     name: "user",
     initialState : {
@@ -90,6 +108,11 @@ const userSlice = createSlice({
             state.loading = false;
             state.user = null;
             state.error = action.error.message;
+        })
+        .addCase(changeProfileUser.fulfilled,(state,action)=>{
+            state.loading = false;
+            state.user = action.payload.body;
+            state.error = null;
         })
     }
 })

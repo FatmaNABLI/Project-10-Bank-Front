@@ -1,5 +1,9 @@
+import './User.css'
 import { useSelector } from "react-redux"
+import {useDispatch} from "react-redux"
 import Account from "../../components/account/Account"
+import { changeProfileUser } from "../../store/UserSlice";
+import { useState } from "react";
 
 function User(){
     const accounts = [
@@ -7,14 +11,42 @@ function User(){
         {title:'Argent Bank Savings (x6712)',amount:'$10,928.42',description:'Available Balance'},
         {title:'Argent Bank Credit Card (x8349)',amount:'$184.30',description:'Current Balance'}
     ]
+    const [firstName,setFirstName] = useState('');
+    const [lastName,setLastName] = useState('');
+
     const {user} = useSelector((state)=>state.user)
+
+    const dispatch = useDispatch();
+    const handleChangeProfileEvent = (e)=>{
+      e.preventDefault();
+      let userCredentials = {firstName:firstName,lastName:lastName};
+      dispatch(changeProfileUser(userCredentials))
+    }
+    const openForm = ()=>{
+      const form = document.getElementById("form-change-profile");
+      form.style.display="block";
+    }
+    const closeForm = ()=>{
+      document.getElementById("form-change-profile").style.display = "none"
+    }
    
     return(
       
       <main className="main bg-dark">
         <div className="header">
           <h1>Welcome back<br />{user && user.firstName} {user && user.lastName}</h1>
-          <button className="edit-button">Edit Name</button>
+          <form id="form-change-profile" onSubmit={handleChangeProfileEvent}>
+            <div>
+              <input type="text" id="userFirstName" placeholder = {user && user.firstName}  onChange ={(e)=>setFirstName(e.target.value)}/>
+              <input type="text" id="userLastName" placeholder = {user && user.lastName} onChange ={(e)=>setLastName(e.target.value)} />
+            </div>
+            <div>
+            <button type="submit">Valider</button> 
+            <button type="reset" onClick={closeForm}>Annuler</button>
+            </div>
+            
+          </form>
+          <button className="edit-button" onClick={openForm}>Edit Name</button>
         </div>
         <h2 className="sr-only">Accounts</h2>
         {accounts.map((account,index)=>
