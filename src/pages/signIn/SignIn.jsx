@@ -1,7 +1,8 @@
+import './SignIn.css'
 import { useState } from "react"
 import {useDispatch, useSelector} from "react-redux"
 import { loginUser, profileUser } from "../../store/UserSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function SignIn(){
   const [email,setEmail] = useState('');
@@ -11,12 +12,14 @@ function SignIn(){
   const {loading,error} = useSelector((state)=>state.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  //LocalStorage 
+  let connectedUser = localStorage.getItem("user");
 
   const handleLoginEvent = (e)=>{
     e.preventDefault();
     let userCredentials = {email:email,password: password};
     dispatch(loginUser(userCredentials)).then((result)=>{
-      console.log(error);
+      //console.log(error);
       if(result.payload){
         setEmail('')
         setPassword('')
@@ -26,7 +29,12 @@ function SignIn(){
     })
   }
     return(
-        <main className="main bg-dark">
+      connectedUser?
+          <div id="sigin-connected">
+            Vous êtes déja connecté<br/>
+            <Link to="/user">Mes transactions</Link>
+          </div>
+        :<main className="main bg-dark">
         <section className="sign-in-content">
           <i className="fa fa-user-circle sign-in-icon"></i>
           <h1>Sign In</h1>

@@ -29,7 +29,10 @@ export const profileUser = createAsyncThunk(
         });
         const response = await request.data;
         let  firstName = response.body.firstName;
+        let  lastName = response.body.lastName;
+
         localStorage.setItem('user', firstName);
+        localStorage.setItem('lastName',lastName);
         //console.log(response)
         return response;
     }

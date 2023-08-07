@@ -6,9 +6,11 @@ import { useDispatch, useSelector } from 'react-redux'
 
 
 function Header(){
+    const connectedUser = localStorage.getItem("user");
     const {user} = useSelector((state)=>state.user)
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    
     const handleLogout = ()=>{
         localStorage.removeItem("token")
         localStorage.removeItem("user");
@@ -25,9 +27,9 @@ function Header(){
             />
             <h1 className="sr-only">Argent Bank</h1>
             </Link>
-            {user? <div id="user-connected">
+            {connectedUser? <div id="user-connected">
                 <i className="fa fa-user"></i>
-                {user.firstName}
+                {connectedUser}
                 <button id="btn-signout" onClick={handleLogout}>
                 <i className="fa fa-sign-out"></i>
                 <span>Sign Out</span>
