@@ -29,7 +29,7 @@ function Header(){
             </Link>
             {connectedUser? <div id="user-connected">
                 <i className="fa fa-user"></i>
-                {connectedUser}
+                {user?user.firstName:connectedUser}
                 <button id="btn-signout" onClick={handleLogout}>
                 <i className="fa fa-sign-out"></i>
                 <span>Sign Out</span>
