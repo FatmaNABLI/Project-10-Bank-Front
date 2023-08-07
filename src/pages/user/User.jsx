@@ -15,12 +15,24 @@ function User(){
     const [lastName,setLastName] = useState('');
 
     const {user} = useSelector((state)=>state.user)
-
     const dispatch = useDispatch();
     const handleChangeProfileEvent = (e)=>{
       e.preventDefault();
-      let userCredentials = {firstName:firstName,lastName:lastName};
-      dispatch(changeProfileUser(userCredentials))
+      let fn = firstName, ln = lastName;
+      if(firstName == ""){
+        fn = user.firstName;
+      }
+      if(lastName == ""){
+        ln = user.lastName;
+      }
+      if(firstName == "" && lastName == ""){
+        alert("Please enter the first Name or the last Name to change")
+
+      }else{
+        let userCredentials = {firstName:fn,lastName:ln};
+        dispatch(changeProfileUser(userCredentials))
+      }
+      
     }
     const openForm = ()=>{
       const form = document.getElementById("form-change-profile");
