@@ -4,6 +4,7 @@ import {useDispatch} from "react-redux"
 import Account from "../../components/account/Account"
 import { changeProfileUser } from "../../store/UserSlice";
 import { useState } from "react";
+import { Link } from 'react-router-dom';
 
 function User(){
     const accounts = [
@@ -16,6 +17,10 @@ function User(){
 
     const {user} = useSelector((state)=>state.user)
     const dispatch = useDispatch();
+    
+    //Get the user foron local storage
+    const connectedUser = localStorage.getItem("user");
+
     const handleChangeProfileEvent = (e)=>{
       e.preventDefault();
       let fn = firstName, ln = lastName;
@@ -47,7 +52,12 @@ function User(){
    
     return(
       
-      <main className="main bg-dark">
+      !connectedUser?
+      <div id="user-not-connected">
+        Connectez vous pour accèder au contenu de cette page<br/>
+        <Link to="/signin">Me connecter</Link>
+      </div>
+      :<main className="main bg-dark">
         <div className="header">
           <h1>Welcome back<br />{user && user.firstName} {user && user.lastName}</h1>
           <form id="form-change-profile" onSubmit={handleChangeProfileEvent}>

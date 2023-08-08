@@ -12,3 +12,9 @@ input {
     margin-right: 20px;
     margin-bottom: 20px;
 }
+#user-not-connected{
+    text-align: center;
+    font-size: 30px;
+    margin-top: 200px;
+    margin-bottom: 400px
+}
