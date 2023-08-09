@@ -36,6 +36,7 @@ function User(){
       }else{
         let userCredentials = {firstName:fn,lastName:ln};
         dispatch(changeProfileUser(userCredentials))
+        closeForm();
       }
       
     }
